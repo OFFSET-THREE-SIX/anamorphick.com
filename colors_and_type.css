@@ -1,0 +1,186 @@
+/* ============================================================
+   THE OFFSET — Design System
+   colors_and_type.css
+   Foundational + semantic tokens for the Offset magazine brand.
+   Editorial culture/music/politics title (Newspack/WordPress).
+   ============================================================ */
+
+/* --- Webfonts -------------------------------------------------
+   Anton  — heavy condensed display (headlines, list modules, nav)
+   Inter  — UI sans (buttons, labels, search)
+   Georgia — body serif (article copy, bylines, dates) = system font
+   Loaded from Google Fonts CDN. If working offline, drop .ttf files
+   into fonts/ and swap the @font-face declarations.
+-------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ---------- INK / NEUTRALS ---------- */
+  --ink:        #000000;   /* rgb(0,0,0)    pure black — rules, borders, display */
+  --ink-1:      #111111;   /* rgb(17,17,17) near-black — primary text & headlines */
+  --ink-2:      #515151;   /* rgb(81,81,81) secondary text, section labels, dates */
+  --ink-3:      #767676;   /* rgb(118,118,118) tertiary — utility nav, meta */
+  --ink-4:      #8c8c8c;   /* rgb(140,140,140) faint meta */
+  --paper:      #ffffff;   /* white page */
+  --slate:      #2c3338;   /* rgb(44,51,56) dark UI surface */
+
+  /* ---------- BRAND ACCENTS ---------- */
+  --red:        #ec1c24;   /* rgb(236,28,36) THE brand red — cover, tags, lists */
+  --red-ink:    #c8141b;   /* hover/pressed red */
+  --blue:       #0002ad;   /* rgb(0,2,173) link & archive-tag blue, bylines */
+  --blue-ink:   #00018a;   /* hover/pressed blue */
+  --blue-alt:   #243d84;   /* rgb(36,61,132) deep accent */
+
+  /* ---------- LINES & SURFACES ---------- */
+  --line:       #cccccc;   /* rgb(204,204,204) hairline borders, dividers */
+  --line-soft:  #dddddd;   /* rgb(221,221,221) softest */
+  --fill:       #eeeeee;   /* rgb(238,238,238) image placeholder / chip */
+  --fill-2:     #f1f1f1;   /* rgb(241,241,241) hover row */
+  --fill-3:     #f7f7f7;   /* rgb(247,247,247) faint zone */
+
+  /* ---------- SHADOWS ---------- */
+  --shadow-header: 0 2px 5px 0 rgba(0,0,0,0.10);  /* sticky header */
+  --shadow-card:   0 1px 4px 0 rgba(0,0,0,0.12);  /* hover lift */
+
+  /* ---------- TYPE FAMILIES ---------- */
+  --font-display: 'Anton', 'Arial Narrow', sans-serif;     /* condensed headline */
+  --font-serif:   Georgia, 'Times New Roman', serif;       /* body / editorial */
+  --font-sans:    'Inter', -apple-system, Helvetica, Arial, sans-serif; /* UI */
+
+  /* ---------- TYPE SCALE (px @ desktop) ---------- */
+  --fs-display:   72px;  /* hero display headline */
+  --fs-h1:        40px;  /* page / featured headline (Anton) */
+  --fs-h2:        28px;  /* card headline */
+  --fs-h3:        20px;  /* sub headline */
+  --fs-lead:      20px;  /* lead serif paragraph */
+  --fs-body:      16px;  /* article body */
+  --fs-meta:      14px;  /* byline / date */
+  --fs-label:     13px;  /* utility nav, footer headings */
+  --fs-tag:       12px;  /* category eyebrow tag */
+
+  --lh-tight:     1.0;   /* display & Anton headlines */
+  --lh-snug:      1.1;
+  --lh-body:      1.6;   /* Georgia body (25.6px @16) */
+  --lh-meta:      1.45;
+
+  --tracking-tag: 0.04em; /* uppercase eyebrow tags */
+}
+
+/* ============================================================
+   SEMANTIC ELEMENT STYLES
+   Apply via classes; mirror the live site's hierarchy.
+   ============================================================ */
+
+/* Eyebrow category tag — RED on editorial/home, BLUE on archive/search */
+.os-tag {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--fs-tag);
+  letter-spacing: var(--tracking-tag);
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--red);
+  padding: 3px 7px 2px;
+  line-height: 1.2;
+}
+.os-tag--blue { background: var(--blue); }
+
+/* Display headline — the Anton condensed look */
+.os-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+  color: var(--ink-1);
+  text-transform: none;
+}
+
+/* Featured / page headline */
+.os-h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-h1);
+  line-height: 1.1;
+  color: var(--ink-1);
+}
+
+/* Card headline — Anton */
+.os-h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-h2);
+  line-height: 1.1;
+  color: var(--ink-1);
+}
+
+/* Serif sub headline (e.g. archive list titles) */
+.os-h2-serif {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--ink-1);
+}
+
+/* Lead / deck */
+.os-lead {
+  font-family: var(--font-serif);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-body);
+  color: var(--ink-1);
+}
+
+/* Body copy */
+.os-body {
+  font-family: var(--font-serif);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--ink-1);
+}
+
+/* Byline & date meta */
+.os-meta {
+  font-family: var(--font-serif);
+  font-size: var(--fs-meta);
+  line-height: var(--lh-meta);
+  color: var(--ink-2);
+}
+.os-byline {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--fs-meta);
+  letter-spacing: 0.02em;
+  color: var(--blue);
+  text-transform: uppercase;
+}
+
+/* Footer / sidebar section heading */
+.os-section-label {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.2;
+  color: var(--ink-2);
+}
+
+/* Secondary nav item — Anton small caps look */
+.os-navitem {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  color: var(--ink-2);
+  text-transform: none;
+}
+
+/* Utility nav / fine print */
+.os-utility {
+  font-family: var(--font-serif);
+  font-size: var(--fs-label);
+  color: var(--ink-3);
+}
+
+/* Links */
+.os-link { color: var(--blue); text-decoration: none; }
+.os-link:hover { text-decoration: underline; }

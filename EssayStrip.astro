@@ -1,0 +1,32 @@
+---
+// Photo-essay strip — full-bleed black section, 3-up frames.
+const {
+  tag = 'No. 03 · Strange Light',
+  title = 'The Light Came In Sideways',
+  intro = 'Made indoors and out across forty minutes, the third survey is about what ordinary surfaces do when the sun is low enough to be honest — louvers, glass, a string of patio bulbs standing in for the day that left.',
+  frames = [
+    { image: '/assets/strange-light/04-the-glass.jpg', alt: 'A courtyard at dusk seen through a reflective glass door', name: 'The Glass', n: 'Frame 04' },
+    { image: '/assets/strange-light/05-the-louvers.jpg', alt: 'Plantation shutters with golden green light coming through the slats', name: 'The Louvers', n: 'Frame 05' },
+    { image: '/assets/strange-light/06-interior-dusk.jpg', alt: 'A dim interior with shutters glowing amber at dusk', name: 'Interior, Dusk', n: 'Frame 06' },
+  ],
+} = Astro.props;
+---
+<section class="essay" id="essay">
+  <div class="wrap">
+    <div class="essay-head">
+      <div class="l">
+        <span class="tag">{tag}</span>
+        <h2 class="headline">{title}</h2>
+      </div>
+      <p class="r">{intro}</p>
+    </div>
+    <div class="essay-strip reveal">
+      {frames.map((f) => (
+        <figure>
+          <img class="ph" src={f.image} alt={f.alt} />
+          <figcaption><span>{f.name}</span><span class="n">{f.n}</span></figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,49 @@
+---
+// Journal feed — feature essay + list of rows.
+const {
+  feature = {
+    href: '/journal/anamorphic-habit',
+    image: '/assets/strange-light/01-strange-light.jpg',
+    cat: 'Essay',
+    title: 'The Anamorphic Habit: Seeing the Block Twice',
+    deck: 'Anamorphosis is the trick of an image that only resolves from one angle. The studio takes its name from it — because a neighborhood, too, only resolves when you stop and stand in the one spot most people walk past.',
+    byline: '6 min read · June 7, 2026',
+  },
+  rows = [
+    { cat: 'Process', title: 'A Survey Is Just Permission to Slow Down', byline: 'May 29', thumb: '/assets/img/04.jpg' },
+    { cat: 'Gear', title: 'One Lens, One Walk: An Argument for Constraint', byline: 'May 18', thumb: '/assets/no2/04-under-the-canopy.jpg' },
+    { cat: 'Place', title: 'Two Schools, One Flag: A Block That Argues With Itself', byline: 'May 4', thumb: '/assets/no2/06-two-schools-one-flag.jpg' },
+    { cat: 'Notebook', title: 'What I Mean When I Say “Everything Experiential”', byline: 'Apr 22', thumb: '/assets/strange-light/03-the-string.jpg' },
+  ],
+} = Astro.props;
+---
+<section class="section" id="journal">
+  <div class="wrap">
+    <div class="modhead">
+      <span class="blk"><span class="red">Journal</span></span>
+      <span class="line"></span>
+      <span class="kicker">field notes between the surveys</span>
+    </div>
+    <div class="journal-grid">
+      <article class="jfeature reveal">
+        <a href={feature.href}><figure><img class="ph" src={feature.image} alt={feature.title} /></figure></a>
+        <p class="cat">{feature.cat}</p>
+        <a href={feature.href}><h3 class="headline">{feature.title}</h3></a>
+        <p class="deck">{feature.deck}</p>
+        <p class="byline">by <b>Anamorphick</b> · {feature.byline}</p>
+      </article>
+      <div class="jlist reveal">
+        {rows.map((r) => (
+          <a class="jrow" href="/journal">
+            <div>
+              <p class="cat">{r.cat}</p>
+              <p class="ttl">{r.title}</p>
+              <p class="byline">by <b>Anamorphick</b> · {r.byline}</p>
+            </div>
+            <img class="jthumb" src={r.thumb} alt="" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

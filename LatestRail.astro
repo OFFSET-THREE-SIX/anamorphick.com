@@ -1,0 +1,59 @@
+---
+// The Latest — field-note list | feature | red editions module.
+const {
+  notes = [
+    { tag: 'Field Note', title: 'On Photographing the Hour You Cannot Name', meta: 'June 7' },
+    { tag: 'Process', title: 'Why the Surveys Are Numbered, Not Titled', meta: 'May 29' },
+    { tag: 'Archive', title: 'A Year of Walking the Same Three Blocks', meta: 'May 14' },
+  ],
+  feature = {
+    image: '/assets/strange-light/01-strange-light.jpg',
+    caption: 'No. 03 · Frame 01 — the cornice, looking up, before the rain held off.',
+    title: 'The Building Looked Back',
+    deck: 'The third survey began by accident — a glance upward at a familiar block that, for one minute of impossible light, refused to be familiar. What follows is a record of staying still long enough to notice.',
+  },
+  editions = [
+    { t: 'Edition No. 02', m: 'Out now · 96 pp · <b>$28</b>' },
+    { t: 'The Annual', m: 'Four editions a year · <b>$96</b>' },
+    { t: 'Edition No. 01', m: 'Archive · <b>sold out</b>' },
+  ],
+} = Astro.props;
+---
+<section class="section">
+  <div class="wrap">
+    <div class="modhead">
+      <span class="blk">The&nbsp;<span class="red">Latest</span></span>
+      <span class="line"></span>
+      <span class="kicker">everything experiential</span>
+    </div>
+    <div class="latest-grid">
+      <div class="latest-list reveal">
+        {notes.map((n) => (
+          <div class="row">
+            <span class="tag blue">{n.tag}</span>
+            <h3 class="headline">{n.title}</h3>
+            <span class="byline">by <b>Anamorphick</b> · {n.meta}</span>
+          </div>
+        ))}
+      </div>
+      <div class="latest-feature reveal">
+        <figure>
+          <img class="ph" src={feature.image} alt={feature.title} />
+          <figcaption>{feature.caption}</figcaption>
+        </figure>
+        <span class="tag">From the Series</span>
+        <h3 class="headline">{feature.title}</h3>
+        <p class="deck">{feature.deck}</p>
+      </div>
+      <aside class="editions-mod reveal">
+        <div class="head">In Print — The Magazine</div>
+        {editions.map((e) => (
+          <div class="item">
+            <div class="t">{e.t}</div>
+            <div class="m" set:html={e.m}></div>
+          </div>
+        ))}
+      </aside>
+    </div>
+  </div>
+</section>

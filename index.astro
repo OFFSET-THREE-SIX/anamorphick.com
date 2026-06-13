@@ -1,0 +1,177 @@
+---
+// Homepage — composes the design components. Survey/Edition/Journal grids pull
+// from Ghost when available and fall back to the curated design content otherwise,
+// so the site builds even before Ghost is connected.
+import SiteShell from '../layouts/SiteShell.astro';
+import Hero from '../components/Hero.astro';
+import LatestRail from '../components/LatestRail.astro';
+import SurveyCard from '../components/SurveyCard.astro';
+import EssayStrip from '../components/EssayStrip.astro';
+import EditionCard from '../components/EditionCard.astro';
+import JournalFeed from '../components/JournalFeed.astro';
+import Newsletter from '../components/Newsletter.astro';
+import { getSurveys, getEditions, tagValue } from '../lib/ghost';
+
+async function safe(fn) { try { return await fn(); } catch { return []; } }
+const ghostSurveys = await safe(getSurveys);
+const ghostEditions = await safe(getEditions);
+
+// ---- The Vernaculars ----
+const surveyFallback = [
+  { href: '/vernaculars/strange-light', no: '03', tone: 'dusk', place: 'Washington, DC · 2026', title: 'Strange Light', deck: 'Seven frames made in the failing light of a single summer evening, when the alley turned every color at once.', image: '/assets/strange-light/03-the-string.jpg', alt: 'String lights on a fence against a violet dusk sky' },
+  { href: '/vernaculars/capitol-hill', no: '02', tone: 'bw', place: 'Capitol Hill · 2025', title: 'Vernacular<br>Capitol Hill', deck: 'Nine frames of one morning on foot — a neighborhood that raises children, read in monochrome.', image: '/assets/no2/05-church-on-the-hill.jpg', alt: 'A church facade on Capitol Hill in black and white' },
+  { href: '/vernaculars/nw-dc', no: '01', tone: 'day', place: 'Northwest DC · 2025', title: 'Vernacular<br>NW DC', deck: 'The survey that started it all — color frames of a quarter that wears its history in brick and awning.', image: '/assets/img/03.jpg', alt: 'A Northwest DC street scene in color' },
+];
+const surveys = ghostSurveys.length
+  ? ghostSurveys.map((s) => ({
+      href: `/vernaculars/${s.slug}`,
+      no: tagValue(s, 'no'),
+      tone: tagValue(s, 'tone') || 'color',
+      place: (s.tags?.find((t) => t.name?.startsWith('#place'))?.name ?? '').replace('#place-', '').replace(/-/g, ' ').toUpperCase(),
+      title: s.title,
+      deck: s.custom_excerpt ?? s.excerpt,
+      image: s.feature_image,
+      alt: s.feature_image_alt ?? s.title,
+    }))
+  : surveyFallback;
+
+// ---- Editions ----
+const editionFallback = [
+  { href: '/editions/violet-hour', bw: false, image: '/assets/strange-light/02-violet-hour.jpg', title: 'Violet Hour', sub: 'Strange Light · No. 03', edition: 'Edition of 25 · 16 × 24 in', price: '$180' },
+  { href: '/editions/first-light', bw: true, image: '/assets/no2/01-first-light.jpg', title: 'First Light', sub: 'Vernacular Capitol Hill · No. 02', edition: 'Edition of 25 · 16 × 24 in', price: '$180' },
+  { href: '/editions/the-block', bw: false, image: '/assets/img/02.jpg', title: 'The Block', sub: 'Vernacular NW DC · No. 01', edition: 'Edition of 15 · 20 × 30 in', price: '$240' },
+];
+const editions = ghostEditions.length
+  ? ghostEditions.map((e) => ({
+      href: tagValue(e, 'stripe') || `/editions/${e.slug}`,
+      bw: tagValue(e, 'tone') === 'bw',
+      image: e.feature_image,
+      title: e.title,
+      sub: e.custom_excerpt,
+      edition: `Edition of ${tagValue(e, 'ed')} · ${(tagValue(e, 'size') || '').replace('x', ' × ')} in`,
+      price: `$${tagValue(e, 'price')}`,
+    }))
+  : editionFallback;
+
+const featured = surveys[0];
+---
+<SiteShell title="Anamorphick — Photographic Studio">
+  <Hero no={featured?.no} title={featured?.title?.replace(/<br>/g, ' ')} />
+
+  <LatestRail />
+
+  <hr class="rule heavy" />
+
+  <!-- The Vernaculars -->
+  <section class="section" id="vernaculars">
+    <div class="wrap">
+      <div class="modhead">
+        <span class="blk">The&nbsp;<span class="red">Vernaculars</span></span>
+        <span class="line"></span>
+        <span class="kicker">a neighborhood, read through tone</span>
+      </div>
+      <div class="survey-grid">
+        {surveys.map((s) => <SurveyCard {...s} />)}
+      </div>
+    </div>
+  </section>
+
+  <EssayStrip />
+
+  <!-- The Magazine -->
+  <section class="section" id="magazine">
+    <div class="wrap">
+      <div class="modhead">
+        <span class="blk">The&nbsp;<span class="red">Magazine</span></span>
+        <span class="line"></span>
+        <span class="kicker">Anamorphick in print · published in numbered editions</span>
+      </div>
+      <div class="mag">
+        <div class="mag-cover reveal">
+          <span class="tag floattag">Edition No. 02</span>
+          <img src="/assets/no2/05-church-on-the-hill.jpg" alt="Anamorphick magazine, Edition No. 02" />
+        </div>
+        <div class="mag-body reveal">
+          <p class="eyebrow">Out Now</p>
+          <h3 class="headline">Edition No. 02</h3>
+          <p class="lede">The magazine is where the surveys come to rest — each edition gathers the latest Vernaculars, the journal entries that surround them, and one foldout plate, printed and bound in Washington, DC.</p>
+          <div class="mag-specs">
+            <div><span class="k">Format</span><span class="v">96 pp · offset · uncoated</span></div>
+            <div><span class="k">Edition</span><span class="v">No. 02 of 2026</span></div>
+            <div><span class="k">Price</span><span class="v">$28</span></div>
+          </div>
+          <div class="mag-actions">
+            <a class="btn" href="#">Buy this edition</a>
+            <a class="btn btn--ghost" href="#">Subscribe to the annual — $96</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prints -->
+  <section class="section" id="prints">
+    <div class="wrap">
+      <div class="modhead">
+        <span class="blk"><span class="red">Prints</span></span>
+        <span class="line"></span>
+        <span class="kicker">archival pigment prints · signed &amp; numbered</span>
+      </div>
+      <div class="prints-grid">
+        {editions.map((e) => <EditionCard {...e} />)}
+      </div>
+      <div class="prints-note">
+        <span class="pn"><b>Archival</b> Pigment on cotton rag, rated 100+ years</span>
+        <span class="pn"><b>Signed</b> Numbered &amp; stamped on the verso</span>
+        <span class="pn"><b>Made to order</b> Ships in 7–10 days from DC</span>
+        <span class="pn"><b>Custom sizes</b> By commission — just ask</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule heavy" />
+
+  <JournalFeed />
+
+  <Newsletter />
+
+  <!-- Studio & Services -->
+  <section class="section" id="studio">
+    <div class="wrap">
+      <div class="modhead">
+        <span class="blk">The&nbsp;<span class="red">Studio</span></span>
+        <span class="line"></span>
+        <span class="kicker">a working room in Washington, DC</span>
+      </div>
+      <div class="studio-intro">
+        <div>
+          <h3 class="headline" style="font-size:clamp(26px,3vw,40px);">More than the work on the wall</h3>
+        </div>
+        <div>
+          <p class="deck" style="font-size:18px;color:var(--ink-1);margin:0 0 16px;">Anamorphick is a one-person photographic studio in Washington, DC, working in numbered surveys of the ordinary American block — the rowhouse, the alley, the hour the light goes strange. The surveys are published as a magazine, offered as archival prints, and the studio keeps its lights on between editions with a small bench of services.</p>
+          <p class="byline" style="font-size:14px;">For commissions, licensing, or bookings: <a class="os-link" href="mailto:studio@anamorphick.com">studio@anamorphick.com</a></p>
+        </div>
+      </div>
+      <div class="svc-grid">
+        <div class="svc-card reveal">
+          <span class="svc-no">01</span>
+          <h4>Camera Rentals</h4>
+          <p>Rangefinders, medium-format bodies, and a shelf of fast primes — booked by the day or the week, with a deposit and a short walkthrough.</p>
+          <div class="price">From $45 / day</div>
+        </div>
+        <div class="svc-card reveal">
+          <span class="svc-no">02</span>
+          <h4>Film &amp; Negative Dev</h4>
+          <p>C-41, black &amp; white, and E-6 developed and scanned in-house. Mail-in or drop-off; contact sheets on request.</p>
+          <div class="price">From $14 / roll</div>
+        </div>
+        <div class="svc-card reveal">
+          <span class="svc-no">03</span>
+          <h4>The Studio, by the Hour</h4>
+          <p>A quiet room with north light for sit-down interviews, portrait sittings, and small shoots. Lighting and a backdrop included.</p>
+          <div class="price">From $60 / hour</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</SiteShell>

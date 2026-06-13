@@ -1,0 +1,41 @@
+# Ghost (headless) + MySQL on a DigitalOcean droplet.
+# 1) set the three CHANGE_ME values   2) docker compose -f docker-compose.ghost.yml up -d
+# Ghost listens on 127.0.0.1:2368 — nginx (see nginx-cms.conf) terminates TLS in front of it.
+
+services:
+  ghost:
+    image: ghost:5-alpine
+    restart: always
+    ports:
+      - "127.0.0.1:2368:2368"
+    environment:
+      url: https://cms.anamorphick.com
+      database__client: mysql
+      database__connection__host: db
+      database__connection__user: ghost
+      database__connection__password: CHANGE_ME_DB_PASSWORD
+      database__connection__database: ghost
+      # mail (Mailgun) for member newsletters — fill when ready:
+      # mail__transport: SMTP
+      # mail__options__service: Mailgun
+      # mail__options__auth__user: postmaster@mg.anamorphick.com
+      # mail__options__auth__pass: CHANGE_ME_MAILGUN_PASS
+    volumes:
+      - ghost-content:/var/lib/ghost/content
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: CHANGE_ME_ROOT_PASSWORD
+      MYSQL_USER: ghost
+      MYSQL_PASSWORD: CHANGE_ME_DB_PASSWORD
+      MYSQL_DATABASE: ghost
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  ghost-content:
+  db-data:

@@ -1,0 +1,28 @@
+---
+// Global overlays: slide-in menu + full-screen search. Driven by anamorphick.js.
+---
+<div class="scrim" id="scrim"></div>
+<aside class="menu-panel" id="menu" aria-hidden="true">
+  <button class="close" id="menuClose">&#10005;&nbsp;&nbsp;Close</button>
+  <img class="menu-mark" src="/assets/mark-anamorphick.svg" width="40" height="40" alt="" />
+  <div class="mwm">An<span class="red">a</span>morphick</div>
+  <div class="msub">Photographic Studio · Washington DC</div>
+  <nav>
+    <a href="/#vernaculars">The Vernaculars <span class="sm">— the surveys</span></a>
+    <a href="/#magazine">The Magazine <span class="sm">— in print</span></a>
+    <a href="/#prints">Prints <span class="sm">— archival editions</span></a>
+    <a href="/rental">The Bench <span class="sm">— rentals &amp; services</span></a>
+    <a href="/#journal">Journal <span class="sm">— field notes</span></a>
+    <a href="/#studio">Studio &amp; Services <span class="sm">— rentals, dev, interviews</span></a>
+    <a href="/#news">Subscribe <span class="sm">— the dispatch</span></a>
+  </nav>
+</aside>
+
+<div class="search-overlay" id="search">
+  <button class="sclose" id="searchClose">&#10005;&nbsp;&nbsp;Close</button>
+  <div class="swrap">
+    <div class="slabel">Search the archive</div>
+    <div class="sfield"><input type="text" id="searchInput" placeholder="A neighborhood, a frame…" /></div>
+    <div class="shint">Try: <b>Capitol Hill</b> <b>Strange Light</b> <b>NW DC</b> <b>the magazine</b> <b>prints</b></div>
+  </div>
+</div>

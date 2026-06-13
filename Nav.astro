@@ -1,0 +1,28 @@
+---
+// Sticky nav. Gains .stuck shadow after 140px scroll (handled in anamorphick.js).
+const links = [
+  { href: '/#vernaculars', label: 'The Vernaculars' },
+  { href: '/#magazine', label: 'The Magazine' },
+  { href: '/#prints', label: 'Prints' },
+  { href: '/rental', label: 'The Bench' },
+  { href: '/#journal', label: 'Journal' },
+];
+---
+<div class="nav" id="nav">
+  <div class="wrap inner">
+    <div class="grp">
+      <button class="iconbtn" id="menuBtn" aria-label="Menu"><img src="/assets/icon-menu.svg" width="22" alt="" /></button>
+    </div>
+    <div class="menu">
+      {links.map((l, i) => (
+        <Fragment>
+          {i > 0 && <span class="sep"></span>}
+          <a href={l.href}>{l.label}</a>
+        </Fragment>
+      ))}
+    </div>
+    <div class="grp">
+      <button class="iconbtn" id="searchBtn" aria-label="Search"><img src="/assets/icon-search.svg" width="20" alt="" /></button>
+    </div>
+  </div>
+</div>

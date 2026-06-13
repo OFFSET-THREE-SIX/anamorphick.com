@@ -1,0 +1,29 @@
+---
+// Hero — featured survey in the 4px frame.
+const {
+  image = '/assets/strange-light/02-violet-hour.jpg',
+  alt = 'Rowhouses and power lines under a violet dusk sky in Washington DC',
+  no = '03',
+  title = 'Strange Light',
+  deck = 'An evening when the sky over the alley turned the color of a bruise and a peach at once — seven frames made between the last sun and the first porch lamp.',
+  date = 'June 6, 2026',
+  place = 'Washington, DC · MMXXV',
+} = Astro.props;
+---
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-frame reveal">
+      <div class="hero-figure">
+        <img src={image} alt={alt} />
+        <span class="tag floattag">New Series · No. {no}</span>
+        <span class="stamp">{place}</span>
+      </div>
+      <div class="hero-cap">
+        <p class="eyebrow">A Photographic Survey</p>
+        <h2 class="headline">{title}</h2>
+        <p class="hero-deck">{deck}</p>
+        <p class="byline">Photographs by <b>Anamorphick</b> <span class="dot"></span> {date}</p>
+      </div>
+    </div>
+  </div>
+</section>

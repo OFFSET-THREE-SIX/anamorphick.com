@@ -1,0 +1,135 @@
+---
+// The Bench — rentals & studio services. Static page (no Ghost data needed),
+// though gear/services could later be Ghost posts tagged #gear / #service.
+// Booking: gear "Reserve" funnels to #join (free Ghost "Community" membership) —
+// gear booking opens only after community sign-up. Darkroom/studio/interview
+// buttons go to Cal.com (swap the placeholder handles for your real ones).
+import SiteShell from '../layouts/SiteShell.astro';
+
+const gear = [
+  { name: 'Leica M6', fmt: '35mm rangefinder · 0.72×', kind: '35mm', day: '$45', week: '$160', dep: '$400' },
+  { name: 'Mamiya 7 II', fmt: 'Medium-format rangefinder · 6×7', kind: '120', day: '$60', week: '$220', dep: '$600' },
+  { name: 'Hasselblad 500C/M', fmt: 'Medium-format SLR · 80mm Planar', kind: '120', day: '$55', week: '$200', dep: '$700' },
+  { name: 'Nikon FM2 + 50mm', fmt: '35mm SLR · f/1.4 prime', kind: '35mm', day: '$30', week: '$110', dep: '$250' },
+];
+const services = [
+  { name: 'Film & Negative Dev', body: 'C-41, black & white, and E-6 developed and scanned in-house. Mail-in or drop-off; contact sheets and high-resolution scans on request.', price: 'From $14 / roll', cta: 'Book a drop-off', book: 'https://cal.com/anamorphick/darkroom' },
+  { name: 'The Studio, by the Hour', body: 'A quiet room with north light for sit-down interviews, portrait sittings, and small shoots. Lighting, stands, and a backdrop included.', price: 'From $60 / hour', cta: 'Request the room', book: 'https://cal.com/anamorphick/studio' },
+  { name: 'Sit-Down Interviews', body: "The studio set for conversation — two chairs, soft key, and a recordist's corner. Booked in two-hour blocks for the journal and for yours.", price: 'From $110 / block', cta: 'Enquire', book: 'https://cal.com/anamorphick/interview' },
+];
+const tiers = [
+  { name: 'Community', cost: 'Free', feature: false, sum: "The open door. A free sign-up — no card, no catch — and you're in.", items: ['Rent camera gear, day or week', 'Book the darkroom & studio', 'The Dispatch, our monthly letter', 'Community rates on dev'] },
+  { name: 'Clients', cost: 'By relationship', feature: true, sum: "Anyone we've photographed, printed for, or worked alongside.", items: ['Everything in Community', 'Priority on studio booking', 'Standing dev turnaround', 'First look at new surveys'] },
+  { name: 'Members', cost: '$96 / year', feature: false, sum: "The magazine annual — and the studio's inner circle.", items: ['Everything in Clients', 'Four printed editions a year', '10% off prints & rentals', 'Members-only field days'] },
+];
+---
+<SiteShell title="The Bench — Rentals & Studio Services · Anamorphick" description="Camera rentals open to all with a free community sign-up; darkroom and studio kept for community, clients, and members.">
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">Rentals &amp; Studio Services</p>
+      <h2 class="headline">The Bench</h2>
+      <p class="lede">The studio keeps a small bench of cameras, a darkroom, and a quiet room with north light — shared with the people around it. Renting gear is open to anyone with a free community sign-up; the darkroom and the studio are kept for our community, clients, and members.</p>
+    </div>
+  </section>
+
+  <section class="section" id="gear">
+    <div class="wrap">
+      <div class="modhead">
+        <span class="blk">Camera&nbsp;<span class="red">Rentals</span></span>
+        <span class="line"></span>
+        <span class="kicker">by the day or the week</span>
+      </div>
+      <div class="bench-intro">
+        <span class="access-pill open"><span class="dot"></span>Open to all · free community sign-up to book</span>
+        <p class="note">Each rental includes a short walkthrough and a refundable deposit, settled on pickup. Insurance or a hold on file required for bodies over $500. <b>Gear booking opens after a free community sign-up</b> &mdash; create an account below and we'll send a reservation link.</p>
+      </div>
+      <div class="gear-grid">
+        {gear.map((g) => (
+          <div class="gear-card reveal">
+            <div class="ghead">
+              <div><div class="gname">{g.name}</div><div class="gfmt">{g.fmt}</div></div>
+              <div class="gkind">{g.kind}</div>
+            </div>
+            <div class="raterow">
+              <div class="r"><span class="k">Day</span><span class="v">{g.day}</span></div>
+              <div class="r"><span class="k">Week</span><span class="v">{g.week}</span></div>
+            </div>
+            <div class="gfoot">
+              <span class="gdep"><b>Deposit</b> &nbsp;{g.dep} refundable</span>
+              <a class="btn" href="#join">Reserve a date <span class="arr">&rarr;</span></a>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="prints-note">
+        <span class="pn"><b>Walkthrough</b> A short hands-on before every rental</span>
+        <span class="pn"><b>Pickup</b> By appointment from the studio in DC</span>
+        <span class="pn"><b>Lighting &amp; kits</b> Strobes, stands, and a backdrop — ask</span>
+        <span class="pn"><b>Something specific?</b> <a class="os-link" href="mailto:bench@anamorphick.com">bench@anamorphick.com</a></span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule heavy" />
+
+  <section class="section" id="services">
+    <div class="wrap">
+      <div class="modhead">
+        <span class="blk">Darkroom&nbsp;&amp;&nbsp;<span class="red">Studio</span></span>
+        <span class="line"></span>
+        <span class="kicker">kept for the community</span>
+      </div>
+      <div class="svc-grid">
+        {services.map((s) => (
+          <div class="svc-card reveal">
+            <span class="access-pill"><span class="dot"></span>Members · Clients · Community</span>
+            <h4>{s.name}</h4>
+            <p>{s.body}</p>
+            <div class="price">{s.price}</div>
+            <a class="btn btn--ghost" href={s.book} target="_blank" rel="noopener">{s.cta} <span class="arr">&rarr;</span></a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule heavy" />
+
+  <section class="section" id="access">
+    <div class="wrap">
+      <div class="modhead">
+        <span class="blk">Ways&nbsp;<span class="red">In</span></span>
+        <span class="line"></span>
+        <span class="kicker">one free sign-up opens the door</span>
+      </div>
+      <div class="tiers">
+        {tiers.map((t) => (
+          <div class={`tier${t.feature ? ' feature' : ''} reveal`}>
+            <div class="thead"><span class="tname">{t.name}</span><span class="tcost">{t.cost}</span></div>
+            <p class="tsum">{t.sum}</p>
+            <ul>{t.items.map((it) => <li>{it}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="join">
+    <div class="wrap">
+      <div class="news reveal">
+        <div class="l">
+          <p class="eyebrow">The Community</p>
+          <h2 class="headline">Join — It's Free</h2>
+          <p>One free account is all it takes to rent a camera, book the darkroom, or reserve the studio. Clients and members are upgraded by hand. No card to start.</p>
+          <form class="form" id="newsForm">
+            <input type="email" id="newsEmail" placeholder="you@email.com" aria-label="Email address" required />
+            <button type="submit">Create account</button>
+          </form>
+        <p class="note">We'll email a sign-in link. Unsubscribe anytime.</p>
+          <p class="ok" id="newsOk">Welcome in — check your inbox for a sign-in link. The bench is open.</p>
+        </div>
+        <div class="r"><img src="/assets/strange-light/05-the-louvers.jpg" alt="Light through studio louvers" /></div>
+      </div>
+    </div>
+  </section>
+</SiteShell>

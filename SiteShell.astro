@@ -1,0 +1,17 @@
+---
+// Page shell: header + nav + overlays + footer + the vanilla interaction script.
+import Base from './Base.astro';
+import Masthead from '../components/Masthead.astro';
+import Nav from '../components/Nav.astro';
+import MenuSearch from '../components/MenuSearch.astro';
+import Footer from '../components/Footer.astro';
+const { title, description } = Astro.props;
+---
+<Base title={title} description={description}>
+  <MenuSearch />
+  <header><Masthead /></header>
+  <Nav />
+  <main><slot /></main>
+  <Footer />
+  <script is:inline src="/scripts/anamorphick.js"></script>
+</Base>

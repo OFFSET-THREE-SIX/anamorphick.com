@@ -1,0 +1,19 @@
+---
+// One survey card for the Vernaculars grid.
+const { href = '#', no, tone = 'color', place, title, deck, image, alt } = Astro.props;
+const toneClass = tone === 'bw' ? ' bw' : '';
+const toneLabel = tone === 'bw' ? 'Black & White' : (tone === 'day' ? 'Color · Day' : 'Color · Dusk');
+---
+<a class={`survey-card${toneClass} reveal`} href={href}>
+  <div class="ph-wrap">
+    <span class="num">No. {no}</span>
+    <span class="toneflag">{toneLabel}</span>
+    <img src={image} alt={alt} />
+  </div>
+  <div class="body">
+    <span class="place">{place}</span>
+    <h3 class="headline" set:html={title}></h3>
+    <p class="deck">{deck}</p>
+    <span class="more">View the survey <span class="arr">&rarr;</span></span>
+  </div>
+</a>

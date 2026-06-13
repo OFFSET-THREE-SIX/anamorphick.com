@@ -1,0 +1,31 @@
+---
+// One survey → its frames + a link to the standalone deck.
+// Store the deck URL in a Ghost internal tag like #deck:/decks/strange-light/
+import SiteShell from '../../layouts/SiteShell.astro';
+import { getSurveys, tagValue } from '../../lib/ghost';
+
+export async function getStaticPaths() {
+  let surveys = [];
+  try { surveys = await getSurveys(); } catch { surveys = []; }
+  return surveys.map((s) => ({ params: { slug: s.slug }, props: { survey: s } }));
+}
+const { survey } = Astro.props;
+const deckUrl = (survey.tags?.find((t) => t.name?.startsWith('#deck'))?.name ?? '').replace('#deck:', '') || null;
+const no = tagValue(survey, 'no');
+---
+<SiteShell title={`${survey.title} — Anamorphick`} description={survey.custom_excerpt ?? survey.excerpt}>
+  <section class="section">
+    <div class="wrap" style="max-width:860px;">
+      <p class="eyebrow" style="font-family:var(--font-serif);font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--blue);">A Photographic Survey · No. {no}</p>
+      <h1 class="headline" style="font-size:clamp(40px,6vw,76px);margin:14px 0 18px;">{survey.title}</h1>
+      <p class="deck" style="font-size:20px;color:var(--ink-1);max-width:60ch;">{survey.custom_excerpt ?? survey.excerpt}</p>
+      {deckUrl && (
+        <p style="margin:26px 0 0;"><a class="btn solid" href={deckUrl} style="display:inline-block;background:#000;color:#fff;font-family:var(--font-sans);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:13px 24px;">View the presentation →</a></p>
+      )}
+    </div>
+  </section>
+  {survey.feature_image && (
+    <section class="section tight"><div class="wrap"><img src={survey.feature_image} alt={survey.title} style="width:100%;" /></div></section>
+  )}
+  <section class="section"><div class="wrap article-body" set:html={survey.html}></div></section>
+</SiteShell>

@@ -1,0 +1,23 @@
+---
+// Newsletter band → Ghost members. Submit handled by anamorphick.js (#newsForm).
+// For real signup, point the form action at Ghost's members API or embed Ghost Portal.
+const { image = '/assets/strange-light/06-interior-dusk.jpg' } = Astro.props;
+---
+<section class="section" id="news">
+  <div class="wrap">
+    <div class="news reveal">
+      <div class="l">
+        <p class="eyebrow">The Dispatch</p>
+        <h2 class="headline">A New Survey, In Your Inbox</h2>
+        <p>Each survey ships with a short letter — what I was looking at, what I got wrong, and the one frame that almost didn't make it. No more than once a month. Free.</p>
+        <form class="form" id="newsForm">
+          <input type="email" id="newsEmail" placeholder="you@email.com" aria-label="Email address" required />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="note">Unsubscribe anytime. A member tier with print discounts is coming.</p>
+        <p class="ok" id="newsOk">Thank you — check your inbox to confirm. The next survey is already underway.</p>
+      </div>
+      <div class="r"><img src={image} alt="A dim interior glowing amber at dusk" /></div>
+    </div>
+  </div>
+</section>
