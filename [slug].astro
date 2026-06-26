@@ -3,14 +3,14 @@
 // Store the deck URL in a Ghost internal tag like #deck:/decks/strange-light/
 import SiteShell from '../../layouts/SiteShell.astro';
 import { getSurveys, tagValue } from '../../lib/ghost';
+import { safe, extractDeckUrl } from '../../lib/transforms';
 
 export async function getStaticPaths() {
-  let surveys = [];
-  try { surveys = await getSurveys(); } catch { surveys = []; }
+  const surveys = await safe(getSurveys, []);
   return surveys.map((s) => ({ params: { slug: s.slug }, props: { survey: s } }));
 }
 const { survey } = Astro.props;
-const deckUrl = (survey.tags?.find((t) => t.name?.startsWith('#deck'))?.name ?? '').replace('#deck:', '') || null;
+const deckUrl = extractDeckUrl(survey.tags);
 const no = tagValue(survey, 'no');
 ---
 <SiteShell title={`${survey.title} — Anamorphick`} description={survey.custom_excerpt ?? survey.excerpt}>

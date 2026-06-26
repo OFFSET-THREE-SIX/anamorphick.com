@@ -1,8 +1,9 @@
 ---
 // One survey card for the Vernaculars grid.
+import { toneClass as getToneClass, toneLabel as getToneLabel } from '../lib/transforms';
 const { href = '#', no, tone = 'color', place, title, deck, image, alt } = Astro.props;
-const toneClass = tone === 'bw' ? ' bw' : '';
-const toneLabel = tone === 'bw' ? 'Black & White' : (tone === 'day' ? 'Color · Day' : 'Color · Dusk');
+const toneClass = getToneClass(tone);
+const toneLabel = getToneLabel(tone);
 ---
 <a class={`survey-card${toneClass} reveal`} href={href}>
   <div class="ph-wrap">

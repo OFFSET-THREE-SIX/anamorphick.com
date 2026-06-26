@@ -10,11 +10,11 @@ import EssayStrip from '../components/EssayStrip.astro';
 import EditionCard from '../components/EditionCard.astro';
 import JournalFeed from '../components/JournalFeed.astro';
 import Newsletter from '../components/Newsletter.astro';
-import { getSurveys, getEditions, tagValue } from '../lib/ghost';
+import { getSurveys, getEditions } from '../lib/ghost';
+import { safe, ghostPostToSurvey, ghostPostToEdition } from '../lib/transforms';
 
-async function safe(fn) { try { return await fn(); } catch { return []; } }
-const ghostSurveys = await safe(getSurveys);
-const ghostEditions = await safe(getEditions);
+const ghostSurveys = await safe(getSurveys, []);
+const ghostEditions = await safe(getEditions, []);
 
 // ---- The Vernaculars ----
 const surveyFallback = [
@@ -23,16 +23,7 @@ const surveyFallback = [
   { href: '/vernaculars/nw-dc', no: '01', tone: 'day', place: 'Northwest DC · 2025', title: 'Vernacular<br>NW DC', deck: 'The survey that started it all — color frames of a quarter that wears its history in brick and awning.', image: '/assets/img/03.jpg', alt: 'A Northwest DC street scene in color' },
 ];
 const surveys = ghostSurveys.length
-  ? ghostSurveys.map((s) => ({
-      href: `/vernaculars/${s.slug}`,
-      no: tagValue(s, 'no'),
-      tone: tagValue(s, 'tone') || 'color',
-      place: (s.tags?.find((t) => t.name?.startsWith('#place'))?.name ?? '').replace('#place-', '').replace(/-/g, ' ').toUpperCase(),
-      title: s.title,
-      deck: s.custom_excerpt ?? s.excerpt,
-      image: s.feature_image,
-      alt: s.feature_image_alt ?? s.title,
-    }))
+  ? ghostSurveys.map(ghostPostToSurvey)
   : surveyFallback;
 
 // ---- Editions ----
@@ -42,15 +33,7 @@ const editionFallback = [
   { href: '/editions/the-block', bw: false, image: '/assets/img/02.jpg', title: 'The Block', sub: 'Vernacular NW DC · No. 01', edition: 'Edition of 15 · 20 × 30 in', price: '$240' },
 ];
 const editions = ghostEditions.length
-  ? ghostEditions.map((e) => ({
-      href: tagValue(e, 'stripe') || `/editions/${e.slug}`,
-      bw: tagValue(e, 'tone') === 'bw',
-      image: e.feature_image,
-      title: e.title,
-      sub: e.custom_excerpt,
-      edition: `Edition of ${tagValue(e, 'ed')} · ${(tagValue(e, 'size') || '').replace('x', ' × ')} in`,
-      price: `$${tagValue(e, 'price')}`,
-    }))
+  ? ghostEditions.map(ghostPostToEdition)
   : editionFallback;
 
 const featured = surveys[0];
