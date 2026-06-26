@@ -5,6 +5,9 @@
 // gear booking opens only after community sign-up. Darkroom/studio/interview
 // buttons go to Cal.com (swap the placeholder handles for your real ones).
 import SiteShell from '../layouts/SiteShell.astro';
+import ModHead from '../components/ModHead.astro';
+import InfoNotes from '../components/InfoNotes.astro';
+import SignupBand from '../components/SignupBand.astro';
 
 const gear = [
   { name: 'Leica M6', fmt: '35mm rangefinder · 0.72×', kind: '35mm', day: '$45', week: '$160', dep: '$400' },
@@ -34,11 +37,7 @@ const tiers = [
 
   <section class="section" id="gear">
     <div class="wrap">
-      <div class="modhead">
-        <span class="blk">Camera&nbsp;<span class="red">Rentals</span></span>
-        <span class="line"></span>
-        <span class="kicker">by the day or the week</span>
-      </div>
+      <ModHead label='Camera&nbsp;<span class="red">Rentals</span>' kicker="by the day or the week" />
       <div class="bench-intro">
         <span class="access-pill open"><span class="dot"></span>Open to all · free community sign-up to book</span>
         <p class="note">Each rental includes a short walkthrough and a refundable deposit, settled on pickup. Insurance or a hold on file required for bodies over $500. <b>Gear booking opens after a free community sign-up</b> &mdash; create an account below and we'll send a reservation link.</p>
@@ -61,12 +60,12 @@ const tiers = [
           </div>
         ))}
       </div>
-      <div class="prints-note">
-        <span class="pn"><b>Walkthrough</b> A short hands-on before every rental</span>
-        <span class="pn"><b>Pickup</b> By appointment from the studio in DC</span>
-        <span class="pn"><b>Lighting &amp; kits</b> Strobes, stands, and a backdrop — ask</span>
-        <span class="pn"><b>Something specific?</b> <a class="os-link" href="mailto:bench@anamorphick.com">bench@anamorphick.com</a></span>
-      </div>
+      <InfoNotes items={[
+        { label: 'Walkthrough', detail: 'A short hands-on before every rental' },
+        { label: 'Pickup', detail: 'By appointment from the studio in DC' },
+        { label: 'Lighting &amp; kits', detail: 'Strobes, stands, and a backdrop \u2014 ask' },
+        { label: 'Something specific?', detail: '<a class="os-link" href="mailto:bench@anamorphick.com">bench@anamorphick.com</a>' },
+      ]} />
     </div>
   </section>
 
@@ -74,11 +73,7 @@ const tiers = [
 
   <section class="section" id="services">
     <div class="wrap">
-      <div class="modhead">
-        <span class="blk">Darkroom&nbsp;&amp;&nbsp;<span class="red">Studio</span></span>
-        <span class="line"></span>
-        <span class="kicker">kept for the community</span>
-      </div>
+      <ModHead label='Darkroom&nbsp;&amp;&nbsp;<span class="red">Studio</span>' kicker="kept for the community" />
       <div class="svc-grid">
         {services.map((s) => (
           <div class="svc-card reveal">
@@ -97,11 +92,7 @@ const tiers = [
 
   <section class="section" id="access">
     <div class="wrap">
-      <div class="modhead">
-        <span class="blk">Ways&nbsp;<span class="red">In</span></span>
-        <span class="line"></span>
-        <span class="kicker">one free sign-up opens the door</span>
-      </div>
+      <ModHead label='Ways&nbsp;<span class="red">In</span>' kicker="one free sign-up opens the door" />
       <div class="tiers">
         {tiers.map((t) => (
           <div class={`tier${t.feature ? ' feature' : ''} reveal`}>
@@ -114,22 +105,15 @@ const tiers = [
     </div>
   </section>
 
-  <section class="section" id="join">
-    <div class="wrap">
-      <div class="news reveal">
-        <div class="l">
-          <p class="eyebrow">The Community</p>
-          <h2 class="headline">Join — It's Free</h2>
-          <p>One free account is all it takes to rent a camera, book the darkroom, or reserve the studio. Clients and members are upgraded by hand. No card to start.</p>
-          <form class="form" id="newsForm">
-            <input type="email" id="newsEmail" placeholder="you@email.com" aria-label="Email address" required />
-            <button type="submit">Create account</button>
-          </form>
-        <p class="note">We'll email a sign-in link. Unsubscribe anytime.</p>
-          <p class="ok" id="newsOk">Welcome in — check your inbox for a sign-in link. The bench is open.</p>
-        </div>
-        <div class="r"><img src="/assets/strange-light/05-the-louvers.jpg" alt="Light through studio louvers" /></div>
-      </div>
-    </div>
-  </section>
+  <SignupBand
+    id="join"
+    eyebrow="The Community"
+    headline="Join — It's Free"
+    body="One free account is all it takes to rent a camera, book the darkroom, or reserve the studio. Clients and members are upgraded by hand. No card to start."
+    buttonText="Create account"
+    note="We'll email a sign-in link. Unsubscribe anytime."
+    ok="Welcome in — check your inbox for a sign-in link. The bench is open."
+    image="/assets/strange-light/05-the-louvers.jpg"
+    imageAlt="Light through studio louvers"
+  />
 </SiteShell>

@@ -1,0 +1,33 @@
+---
+// Signup / newsletter band — image + form.
+// Shared by Newsletter (The Dispatch) and the rental page (Community sign-up).
+const {
+  id = 'news',
+  eyebrow = 'The Dispatch',
+  headline = 'A New Survey, In Your Inbox',
+  body = '',
+  buttonText = 'Subscribe',
+  note = '',
+  ok = '',
+  image = '/assets/strange-light/06-interior-dusk.jpg',
+  imageAlt = 'A dim interior glowing amber at dusk',
+} = Astro.props;
+---
+<section class="section" id={id}>
+  <div class="wrap">
+    <div class="news reveal">
+      <div class="l">
+        <p class="eyebrow">{eyebrow}</p>
+        <h2 class="headline">{headline}</h2>
+        <p>{body}</p>
+        <form class="form" id="newsForm">
+          <input type="email" id="newsEmail" placeholder="you@email.com" aria-label="Email address" required />
+          <button type="submit">{buttonText}</button>
+        </form>
+        <p class="note">{note}</p>
+        <p class="ok" id="newsOk">{ok}</p>
+      </div>
+      <div class="r"><img src={image} alt={imageAlt} /></div>
+    </div>
+  </div>
+</section>
