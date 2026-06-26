@@ -10,11 +10,11 @@ import EssayStrip from '../components/EssayStrip.astro';
 import EditionCard from '../components/EditionCard.astro';
 import JournalFeed from '../components/JournalFeed.astro';
 import Newsletter from '../components/Newsletter.astro';
-import { getSurveys, getEditions } from '../lib/ghost';
-import { safe, ghostPostToSurvey, ghostPostToEdition } from '../lib/transforms';
+import { getSurveys, getEditions, ghostConfigured } from '../lib/ghost';
+import { safeFetch, ghostPostToSurvey, ghostPostToEdition } from '../lib/transforms';
 
-const ghostSurveys = await safe(getSurveys, []);
-const ghostEditions = await safe(getEditions, []);
+const ghostSurveys = await safeFetch('getSurveys', getSurveys);
+const ghostEditions = await safeFetch('getEditions', getEditions);
 
 // ---- The Vernaculars ----
 const surveyFallback = [
