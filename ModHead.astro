@@ -1,0 +1,12 @@
+---
+// Module header — black block + rule + italic kicker.
+// Replaces the repeated .modhead HTML pattern across pages and components.
+//   label: inner HTML for the black block (use <span class="red"> for the accent word)
+//   kicker: italic subtitle after the rule
+const { label, kicker } = Astro.props;
+---
+<div class="modhead">
+  <span class="blk" set:html={label}></span>
+  <span class="line"></span>
+  <span class="kicker">{kicker}</span>
+</div>

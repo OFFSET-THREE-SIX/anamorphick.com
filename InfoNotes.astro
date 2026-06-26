@@ -1,0 +1,12 @@
+---
+// Info-notes strip — a row of short bold-label + detail items.
+// Used for print specs, rental notes, and similar factoid rows.
+//   items: Array<{ label: string; detail: string }>
+//     detail may contain HTML (links, entities).
+const { items = [] } = Astro.props;
+---
+<div class="prints-note">
+  {items.map((item) => (
+    <span class="pn"><b>{item.label}</b> <Fragment set:html={item.detail} /></span>
+  ))}
+</div>

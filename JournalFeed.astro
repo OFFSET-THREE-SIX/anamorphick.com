@@ -1,5 +1,6 @@
 ---
 // Journal feed — feature essay + list of rows.
+import ModHead from './ModHead.astro';
 const {
   feature = {
     href: '/journal/anamorphic-habit',
@@ -19,11 +20,7 @@ const {
 ---
 <section class="section" id="journal">
   <div class="wrap">
-    <div class="modhead">
-      <span class="blk"><span class="red">Journal</span></span>
-      <span class="line"></span>
-      <span class="kicker">field notes between the surveys</span>
-    </div>
+    <ModHead label='<span class="red">Journal</span>' kicker="field notes between the surveys" />
     <div class="journal-grid">
       <article class="jfeature reveal">
         <a href={feature.href}><figure><img class="ph" src={feature.image} alt={feature.title} /></figure></a>

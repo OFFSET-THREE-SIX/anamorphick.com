@@ -10,6 +10,8 @@ import EssayStrip from '../components/EssayStrip.astro';
 import EditionCard from '../components/EditionCard.astro';
 import JournalFeed from '../components/JournalFeed.astro';
 import Newsletter from '../components/Newsletter.astro';
+import ModHead from '../components/ModHead.astro';
+import InfoNotes from '../components/InfoNotes.astro';
 import { getSurveys, getEditions } from '../lib/ghost';
 import { safe, ghostPostToSurvey, ghostPostToEdition } from '../lib/transforms';
 
@@ -48,11 +50,7 @@ const featured = surveys[0];
   <!-- The Vernaculars -->
   <section class="section" id="vernaculars">
     <div class="wrap">
-      <div class="modhead">
-        <span class="blk">The&nbsp;<span class="red">Vernaculars</span></span>
-        <span class="line"></span>
-        <span class="kicker">a neighborhood, read through tone</span>
-      </div>
+      <ModHead label='The&nbsp;<span class="red">Vernaculars</span>' kicker="a neighborhood, read through tone" />
       <div class="survey-grid">
         {surveys.map((s) => <SurveyCard {...s} />)}
       </div>
@@ -64,11 +62,7 @@ const featured = surveys[0];
   <!-- The Magazine -->
   <section class="section" id="magazine">
     <div class="wrap">
-      <div class="modhead">
-        <span class="blk">The&nbsp;<span class="red">Magazine</span></span>
-        <span class="line"></span>
-        <span class="kicker">Anamorphick in print · published in numbered editions</span>
-      </div>
+      <ModHead label='The&nbsp;<span class="red">Magazine</span>' kicker="Anamorphick in print · published in numbered editions" />
       <div class="mag">
         <div class="mag-cover reveal">
           <span class="tag floattag">Edition No. 02</span>
@@ -95,20 +89,16 @@ const featured = surveys[0];
   <!-- Prints -->
   <section class="section" id="prints">
     <div class="wrap">
-      <div class="modhead">
-        <span class="blk"><span class="red">Prints</span></span>
-        <span class="line"></span>
-        <span class="kicker">archival pigment prints · signed &amp; numbered</span>
-      </div>
+      <ModHead label='<span class="red">Prints</span>' kicker="archival pigment prints · signed & numbered" />
       <div class="prints-grid">
         {editions.map((e) => <EditionCard {...e} />)}
       </div>
-      <div class="prints-note">
-        <span class="pn"><b>Archival</b> Pigment on cotton rag, rated 100+ years</span>
-        <span class="pn"><b>Signed</b> Numbered &amp; stamped on the verso</span>
-        <span class="pn"><b>Made to order</b> Ships in 7–10 days from DC</span>
-        <span class="pn"><b>Custom sizes</b> By commission — just ask</span>
-      </div>
+      <InfoNotes items={[
+        { label: 'Archival', detail: 'Pigment on cotton rag, rated 100+ years' },
+        { label: 'Signed', detail: 'Numbered &amp; stamped on the verso' },
+        { label: 'Made to order', detail: 'Ships in 7\u201310 days from DC' },
+        { label: 'Custom sizes', detail: 'By commission \u2014 just ask' },
+      ]} />
     </div>
   </section>
 
@@ -121,11 +111,7 @@ const featured = surveys[0];
   <!-- Studio & Services -->
   <section class="section" id="studio">
     <div class="wrap">
-      <div class="modhead">
-        <span class="blk">The&nbsp;<span class="red">Studio</span></span>
-        <span class="line"></span>
-        <span class="kicker">a working room in Washington, DC</span>
-      </div>
+      <ModHead label='The&nbsp;<span class="red">Studio</span>' kicker="a working room in Washington, DC" />
       <div class="studio-intro">
         <div>
           <h3 class="headline" style="font-size:clamp(26px,3vw,40px);">More than the work on the wall</h3>

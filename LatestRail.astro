@@ -1,5 +1,6 @@
 ---
 // The Latest — field-note list | feature | red editions module.
+import ModHead from './ModHead.astro';
 const {
   notes = [
     { tag: 'Field Note', title: 'On Photographing the Hour You Cannot Name', meta: 'June 7' },
@@ -21,11 +22,7 @@ const {
 ---
 <section class="section">
   <div class="wrap">
-    <div class="modhead">
-      <span class="blk">The&nbsp;<span class="red">Latest</span></span>
-      <span class="line"></span>
-      <span class="kicker">everything experiential</span>
-    </div>
+    <ModHead label='The&nbsp;<span class="red">Latest</span>' kicker="everything experiential" />
     <div class="latest-grid">
       <div class="latest-list reveal">
         {notes.map((n) => (
