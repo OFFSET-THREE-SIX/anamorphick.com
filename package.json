@@ -6,10 +6,17 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "astro": "^4.15.0",
-    "@tryghost/content-api": "^1.11.21"
+    "@tryghost/content-api": "^1.11.21",
+    "astro": "^4.15.0"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.9",
+    "vitest": "^4.1.9"
   }
 }
