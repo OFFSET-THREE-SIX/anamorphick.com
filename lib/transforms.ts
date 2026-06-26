@@ -1,7 +1,7 @@
 // Pure data-transformation helpers extracted from Astro page frontmatter
 // so they can be unit-tested independently.
 
-import { tagValue } from '../ghost';
+import { tagValue, ghostConfigured } from '../ghost';
 
 // ---- safe wrapper ----
 
@@ -9,8 +9,26 @@ import { tagValue } from '../ghost';
 export async function safe<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
   try {
     return await fn();
-  } catch {
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.warn(`[build] safe() caught error: ${message}`);
     return fallback;
+  }
+}
+
+/**
+ * Attempt a Ghost fetch; fall back to [] on failure but log why.
+ * Short-circuits silently when Ghost is intentionally unconfigured;
+ * logs a warning when a configured Ghost connection fails unexpectedly.
+ */
+export async function safeFetch<T>(label: string, fn: () => Promise<T[]>): Promise<T[]> {
+  if (!ghostConfigured) return [];
+  try {
+    return await fn();
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.warn(`[build] ${label} failed, using fallback content: ${message}`);
+    return [];
   }
 }
 

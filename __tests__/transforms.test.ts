@@ -1,12 +1,15 @@
 import { describe, it, expect, vi } from 'vitest';
 
+vi.hoisted(() => {
+  process.env.GHOST_URL = 'https://cms.example.com';
+  process.env.GHOST_CONTENT_KEY = 'abc123';
+});
+
 vi.mock('@tryghost/content-api', () => ({
   default: class MockGhostContentAPI {
     posts = { browse: vi.fn(), read: vi.fn() };
   },
 }));
-vi.stubEnv('GHOST_URL', 'https://cms.example.com');
-vi.stubEnv('GHOST_CONTENT_KEY', 'abc123');
 
 import {
   safe,

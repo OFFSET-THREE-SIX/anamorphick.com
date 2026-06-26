@@ -1,19 +1,20 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// vi.mock is hoisted, so use vi.hoisted for shared mock references.
-const { browseMock, readMock } = vi.hoisted(() => ({
-  browseMock: vi.fn(),
-  readMock: vi.fn(),
-}));
+// vi.hoisted runs before module evaluation — set env so ghostConfigured = true.
+const { browseMock, readMock } = vi.hoisted(() => {
+  process.env.GHOST_URL = 'https://cms.example.com';
+  process.env.GHOST_CONTENT_KEY = 'abc123';
+  return {
+    browseMock: vi.fn(),
+    readMock: vi.fn(),
+  };
+});
 
 vi.mock('@tryghost/content-api', () => ({
   default: class MockGhostContentAPI {
     posts = { browse: browseMock, read: readMock };
   },
 }));
-
-vi.stubEnv('GHOST_URL', 'https://cms.example.com');
-vi.stubEnv('GHOST_CONTENT_KEY', 'abc123');
 
 import { getSurveys, getJournal, getEditions, getPost, tagValue } from '../ghost';
 
@@ -82,9 +83,15 @@ describe('getSurveys', () => {
     });
   });
 
-  it('propagates API errors', async () => {
+  it('propagates API errors with context', async () => {
     browseMock.mockRejectedValue(new Error('Network error'));
-    await expect(getSurveys()).rejects.toThrow('Network error');
+    await expect(getSurveys()).rejects.toThrow('[ghost] "getSurveys" request failed: Network error');
+  });
+
+  it('preserves the original error as cause', async () => {
+    const original = new Error('Network error');
+    browseMock.mockRejectedValue(original);
+    await expect(getSurveys()).rejects.toHaveProperty('cause', original);
   });
 });
 
