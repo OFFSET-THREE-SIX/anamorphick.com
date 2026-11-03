@@ -702,9 +702,41 @@ def connect_external(kind, diag):
     return app
 
 
+_PATH_OPTS = ("--clip", "--folder", "--lut", "--out", "--lut-dir")
+
+
+def _abs_path_args(argv):
+    """Absolute paths for the Console line: Resolve's working directory is not this terminal's."""
+    out, cur = [], None
+    for a in argv:
+        a = str(a)
+        if a.startswith("--"):
+            key, eq, val = a.partition("=")
+            cur = key if (key in _PATH_OPTS and not eq) else None
+            if eq and key in _PATH_OPTS and val:
+                a = key + "=" + _abs_if_meant(key, val)
+            out.append(a)
+            continue
+        if cur is not None:
+            a = _abs_if_meant(cur, a)
+            if cur != "--clip":                     # only --clip takes several values
+                cur = None
+        out.append(a)
+    return out
+
+
+def _abs_if_meant(opt, val):
+    v = os.path.expanduser(val)
+    if os.path.isabs(v) or (opt == "--folder" and v.lower() == "auto"):
+        return v
+    if opt in ("--out", "--lut-dir") or os.path.exists(v):
+        return os.path.abspath(v)
+    return val                                      # e.g. a LUT name the script finds next to itself
+
+
 def console_one_liner(argv):
     sp = script_path() or "/path/to/anamorphick_resolve_setup.py"
-    args = ["anamorphick_resolve_setup.py"] + [a for a in argv]
+    args = ["anamorphick_resolve_setup.py"] + _abs_path_args(argv)
     return ('import sys; sys.argv = %r; p = %r; exec(open(p, encoding="utf-8").read(), '
             '{"__name__": "__main__", "__file__": p, "resolve": globals().get("resolve"), '
             '"bmd": globals().get("bmd")})' % (args, sp))
