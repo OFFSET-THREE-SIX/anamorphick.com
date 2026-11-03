@@ -1,0 +1,118 @@
+{
+  "pivot": 0.435,
+  "contrast": 1.18,
+  "contrast_rgb_mix": 0.0,
+  "sat": 1.22,
+  "vibrance": 0.4,
+  "sat_limit_power": 3.0,
+  "skin_protect": 0.65,
+  "skin_hue_deg": 22.0,
+  "skin_hue_sigma_deg": 12.0,
+  "skin_sat_window": [
+    0.06,
+    0.18,
+    0.6,
+    0.85
+  ],
+  "hue_protect": [
+    [
+      100.0,
+      32.0,
+      0.45
+    ]
+  ],
+  "hue_boost": [
+    [
+      215.0,
+      22.0,
+      0.45
+    ]
+  ],
+  "sat_shadow_rolloff": [
+    0.02,
+    0.15
+  ],
+  "sat_white_rolloff": [
+    0.8,
+    1.0
+  ],
+  "gamut_power": 2.0,
+  "skin_warm_protect": 0.5,
+  "warm_hue_anchors": [
+    [
+      0.0,
+      38.0
+    ],
+    [
+      0.2,
+      39.0
+    ],
+    [
+      0.41,
+      41.0
+    ],
+    [
+      0.7,
+      43.5
+    ],
+    [
+      0.9,
+      45.5
+    ],
+    [
+      1.0,
+      47.0
+    ]
+  ],
+  "warm_luma_tilt": 0.03,
+  "warm_amount_anchors": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.05,
+      0.003
+    ],
+    [
+      0.15,
+      0.016
+    ],
+    [
+      0.41,
+      0.05
+    ],
+    [
+      0.7,
+      0.064
+    ],
+    [
+      0.93,
+      0.07
+    ],
+    [
+      1.0,
+      0.04
+    ]
+  ],
+  "warm_pin_softness": 0.008,
+  "white_luma_drop_max": 0.0145,
+  "strength": 1.0,
+  "name": "golden_709",
+  "title": "Anamorphick Golden 709 medium",
+  "lut_size": 33,
+  "generator": "make_lut.py v1.0",
+  "domain": "Rec.709 Gamma 2.4 display-referred, full data levels 0..1",
+  "operation_order": [
+    "contrast(max-RGB norm)",
+    "vibrance/saturation vs 709 luma",
+    "soft gamut compression toward luma",
+    "golden warmth (per-channel lift/gamma/gain-style offsets)",
+    "safety clamp"
+  ],
+  "stats": {
+    "values_touched_by_final_clamp": 0,
+    "max_gamut_excursion_before_compression": 1.273762449002494,
+    "max_gamut_excursion_after_compression": 1.0000000000010087
+  }
+}
